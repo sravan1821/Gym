@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="24" fill="#08080a" />
+  <circle cx="50" cy="50" r="46" fill="none" stroke="#ff1e42" stroke-width="3" stroke-dasharray="4 4" />
+  <!-- Stylized SS Flame Icon -->
+  <path d="M50 18 C50 18, 32 38, 32 54 C32 66, 40 76, 50 76 C60 76, 68 66, 68 54 C68 44, 62 36, 56 30 C58 38, 54 44, 48 48 C48 38, 56 26, 50 18 Z" fill="url(#fireGradient)" />
+  <defs>
+    <linearGradient id="fireGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#ff4d6d" />
+      <stop offset="100%" stop-color="#ff1e42" />
+    </linearGradient>
+  </defs>
+</svg>
