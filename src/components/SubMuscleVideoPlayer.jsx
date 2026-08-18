@@ -99,7 +99,7 @@ export default function SubMuscleVideoPlayer({
     motionOffset = 1.0 - (progress - 0.55) / 0.3; // 1 to 0
   } else {
     phaseName = 'PEAK CONTRACTION SQUEEZE';
-    phaseColor = '#10b981';
+    phaseColor = '#dc2626';
     motionOffset = 0.0;
   }
 
@@ -113,7 +113,7 @@ export default function SubMuscleVideoPlayer({
     confetti({
       particleCount: 35,
       spread: 60,
-      colors: ['#00f2fe', '#ff2a5f', '#10b981', '#f59e0b'],
+      colors: ['#00f2fe', '#ff2a5f', '#dc2626', '#f59e0b'],
     });
   };
 
@@ -140,11 +140,11 @@ export default function SubMuscleVideoPlayer({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-mono whitespace-nowrap transition-all font-bold flex items-center gap-1.5 ${
                   isSel
-                    ? 'bg-cyan-500 text-slate-950 shadow-md scale-102'
-                    : 'bg-slate-900/80 text-slate-400 border border-slate-800 hover:text-slate-200'
+                    ? 'bg-red-600 text-black shadow-md scale-102'
+                    : 'bg-white/80 text-gray-500  hover:text-neutral-200'
                 }`}
               >
-                <Play className={`w-3 h-3 ${isSel ? 'fill-slate-950' : 'fill-cyan-400 text-cyan-400'}`} />
+                <Play className={`w-3 h-3 ${isSel ? 'fill-slate-950' : 'fill-red-500 text-red-500'}`} />
                 <span>{ex.name}</span>
               </button>
             );
@@ -153,7 +153,7 @@ export default function SubMuscleVideoPlayer({
       )}
 
       {/* Main Video Demonstration Frame */}
-      <div className="relative rounded-3xl bg-[#080912] border border-slate-700/80 overflow-hidden shadow-2xl">
+      <div className="relative rounded-3xl bg-[#080912]  overflow-hidden shadow-2xl">
         {/* Video Overlay Top HUD */}
         <div className="absolute top-0 inset-x-0 p-3.5 flex items-center justify-between z-20 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
           <div className="flex items-center gap-2">
@@ -161,10 +161,10 @@ export default function SubMuscleVideoPlayer({
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
             </span>
-            <span className="text-xs font-mono font-bold text-white tracking-wider uppercase">
+            <span className="text-xs font-mono font-bold text-gray-900 tracking-wider uppercase">
               HD FORM VIDEO DEMO
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase font-bold">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-red-600/15 text-red-400  uppercase font-bold">
               {subMuscle?.name || 'Target'}
             </span>
           </div>
@@ -177,8 +177,8 @@ export default function SubMuscleVideoPlayer({
                 onClick={() => setViewAngle(angle)}
                 className={`px-2 py-0.5 rounded-md font-bold uppercase transition-all ${
                   viewAngle === angle
-                    ? 'bg-cyan-500 text-slate-950 shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-red-600 text-black shadow-sm'
+                    : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
                 {angle}
@@ -190,7 +190,7 @@ export default function SubMuscleVideoPlayer({
         {/* Video Kinematic Canvas Simulation */}
         <div className="relative w-full h-64 sm:h-72 flex items-center justify-center bg-gradient-to-b from-[#0a0c16] via-[#080910] to-[#04050a]">
           {/* Background studio ambient glow */}
-          <div className="absolute w-56 h-56 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+          <div className="absolute w-56 h-56 rounded-full bg-red-600/10 blur-3xl pointer-events-none" />
 
           {/* Biomechanical Motion Graphic */}
           <svg viewBox="0 0 300 240" className="w-full h-full max-h-64 drop-shadow-2xl select-none">
@@ -283,18 +283,18 @@ export default function SubMuscleVideoPlayer({
           </svg>
 
           {/* Floating Rep Phase Callout */}
-          <div className="absolute bottom-12 left-4 px-3 py-1 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-white flex items-center gap-2">
+          <div className="absolute bottom-12 left-4 px-3 py-1 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-gray-900 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: phaseColor }} />
             <span>{phaseName}</span>
           </div>
 
-          <div className="absolute bottom-12 right-4 px-3 py-1 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-cyan-400">
+          <div className="absolute bottom-12 right-4 px-3 py-1 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-red-500">
             REP {repCount} / 12
           </div>
         </div>
 
         {/* Video Scrubber & Playback Controls Bar */}
-        <div className="p-3.5 bg-[#0a0c16] border-t border-slate-800 space-y-2.5">
+        <div className="p-3.5 bg-[#0a0c16]  space-y-2.5">
           {/* Progress Bar / Scrubber */}
           <div
             onClick={(e) => {
@@ -302,10 +302,10 @@ export default function SubMuscleVideoPlayer({
               const clickPos = (e.clientX - rect.left) / rect.width;
               setProgress(Math.max(0, Math.min(1, clickPos)));
             }}
-            className="w-full bg-slate-800 h-2 rounded-full cursor-pointer relative overflow-hidden group"
+            className="w-full bg-gray-100 h-2 rounded-full cursor-pointer relative overflow-hidden group"
           >
             <div
-              className="bg-gradient-to-r from-cyan-500 via-blue-500 to-red-500 h-full rounded-full transition-all duration-75"
+              className="bg-gradient-to-r from-red-500 via-blue-500 to-red-500 h-full rounded-full transition-all duration-75"
               style={{ width: `${progress * 100}%` }}
             />
           </div>
@@ -315,7 +315,7 @@ export default function SubMuscleVideoPlayer({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsPlaying((p) => !p)}
-                className="p-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-all shadow-md flex items-center gap-1"
+                className="p-2 rounded-xl bg-red-600 hover:bg-red-500 text-black font-bold transition-all shadow-md flex items-center gap-1"
               >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                 <span>{isPlaying ? 'PAUSE' : 'PLAY'}</span>
@@ -326,22 +326,22 @@ export default function SubMuscleVideoPlayer({
                   setProgress(0);
                   setRepCount(1);
                 }}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                className="p-2 rounded-xl bg-gray-100 hover:bg-slate-700 text-gray-600 transition-colors"
                 title="Restart Video Loop"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
               </button>
 
               {/* Speed multiplier */}
-              <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-xl p-0.5">
+              <div className="flex items-center gap-1 bg-white  rounded-xl p-0.5">
                 {[0.5, 1, 1.5].map((speed) => (
                   <button
                     key={speed}
                     onClick={() => setPlaybackSpeed(speed)}
                     className={`px-2 py-1 rounded-lg text-[10px] font-bold ${
                       playbackSpeed === speed
-                        ? 'bg-slate-700 text-white'
-                        : 'text-slate-400 hover:text-slate-200'
+                        ? 'bg-slate-700 text-gray-900'
+                        : 'text-gray-500 hover:text-neutral-200'
                     }`}
                   >
                     {speed}x
@@ -353,7 +353,7 @@ export default function SubMuscleVideoPlayer({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => onOpenFullModal && onOpenFullModal(activeExercise)}
-                className="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold transition-colors flex items-center gap-1.5"
+                className="py-2 px-3 rounded-xl bg-gray-100 hover:bg-slate-700 text-red-400 font-bold transition-colors flex items-center gap-1.5"
               >
                 <Eye className="w-3.5 h-3.5" />
                 <span>FULL GUIDE</span>
@@ -363,8 +363,8 @@ export default function SubMuscleVideoPlayer({
                 onClick={handleAdd}
                 className={`py-2 px-3.5 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
                   isAdded
-                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                    : 'bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-md hover:brightness-110'
+                    ? 'bg-red-600/20 text-red-500 border border-red-600/40'
+                    : 'bg-gradient-to-r from-red-600 to-red-500 text-black shadow-md hover:brightness-110'
                 }`}
               >
                 {isAdded ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
@@ -376,27 +376,27 @@ export default function SubMuscleVideoPlayer({
       </div>
 
       {/* Video Key Form Checkpoints */}
-      <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-        <h4 className="text-xs font-mono uppercase font-bold text-slate-400 flex items-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+      <div className="p-4 rounded-2xl bg-white/80  space-y-3">
+        <h4 className="text-xs font-mono uppercase font-bold text-gray-500 flex items-center gap-2">
+          <Sparkles className="w-3.5 h-3.5 text-red-500" />
           <span>VIDEO FORM EXECUTION CHECKPOINTS</span>
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-          <div className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
-            <span className="font-mono text-[10px] text-cyan-400 block font-bold">0:00 • SETUP</span>
-            <p className="text-slate-300 mt-0.5 leading-snug">
+          <div className="p-2.5 rounded-xl bg-gray-100/60 ">
+            <span className="font-mono text-[10px] text-red-500 block font-bold">0:00 • SETUP</span>
+            <p className="text-gray-600 mt-0.5 leading-snug">
               {activeExercise.cues?.setup || 'Retract scapulae, plant feet firmly, grip barbell tightly.'}
             </p>
           </div>
-          <div className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
-            <span className="font-mono text-[10px] text-cyan-400 block font-bold">0:02 • DESCENT</span>
-            <p className="text-slate-300 mt-0.5 leading-snug">
+          <div className="p-2.5 rounded-xl bg-gray-100/60 ">
+            <span className="font-mono text-[10px] text-red-500 block font-bold">0:02 • DESCENT</span>
+            <p className="text-gray-600 mt-0.5 leading-snug">
               {activeExercise.cues?.execution || 'Lower with 3-second control to touch upper chest line.'}
             </p>
           </div>
-          <div className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
-            <span className="font-mono text-[10px] text-emerald-400 block font-bold">0:04 • SQUEEZE</span>
-            <p className="text-slate-300 mt-0.5 leading-snug">
+          <div className="p-2.5 rounded-xl bg-gray-100/60 ">
+            <span className="font-mono text-[10px] text-red-500 block font-bold">0:04 • SQUEEZE</span>
+            <p className="text-gray-600 mt-0.5 leading-snug">
               {activeExercise.cues?.focus || 'Drive upward with power and squeeze target sub-muscle at top.'}
             </p>
           </div>

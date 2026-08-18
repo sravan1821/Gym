@@ -84,7 +84,7 @@ export default function ExerciseVisualizer({
   const muscleGlow = repPhase === 'squeeze' ? 1.0 : repPhase === 'concentric' ? 0.85 : 0.4;
 
   return (
-    <div className="relative w-full rounded-2xl bg-[#090b10] border border-slate-800/80 p-4 overflow-hidden select-none">
+    <div className="relative w-full rounded-2xl bg-[#090b10] /80 p-4 overflow-hidden select-none">
       {/* Studio lighting glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full blur-[80px] pointer-events-none opacity-25"
@@ -95,16 +95,16 @@ export default function ExerciseVisualizer({
       <div className="flex items-center justify-between gap-2 mb-3 relative z-10">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-semibold">
             BIOMECHANICAL FORM SCAN
           </span>
         </div>
 
         {/* Phase Pill */}
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900/90 border border-slate-700 text-[10px] font-mono font-bold text-slate-300">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-900/90  text-[10px] font-mono font-bold text-neutral-300">
           <span
             className="w-2 h-2 rounded-full"
             style={{
@@ -238,28 +238,28 @@ export default function ExerciseVisualizer({
       </div>
 
       {/* Bottom Controls & Telemetry */}
-      <div className="flex items-center justify-between gap-3 mt-2 pt-2.5 border-t border-slate-800/80 text-xs font-mono">
-        <div className="flex items-center gap-3 text-slate-400">
+      <div className="flex items-center justify-between gap-3 mt-2 pt-2.5 /80 text-xs font-mono">
+        <div className="flex items-center gap-3 text-neutral-400">
           <span>
             REP: <strong className="text-white font-bold">{repCount} / 12</strong>
           </span>
           <span className="text-slate-600">•</span>
           <span>
-            TEMPO: <span className="text-cyan-400">{tempo}</span>
+            TEMPO: <span className="text-emerald-400">{tempo}</span>
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsPlaying((prev) => !prev)}
-            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors flex items-center gap-1 text-[11px]"
+            className="p-1.5 rounded-lg bg-neutral-800 hover:bg-slate-700 text-neutral-200 transition-colors flex items-center gap-1 text-[11px]"
           >
             {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
             <span>{isPlaying ? 'Pause' : 'Play'}</span>
           </button>
           <button
             onClick={() => setRepCount(1)}
-            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors"
+            className="p-1.5 rounded-lg bg-neutral-800 hover:bg-slate-700 text-neutral-400 hover:text-neutral-200 transition-colors"
             title="Reset Reps"
           >
             <RotateCcw className="w-3.5 h-3.5" />

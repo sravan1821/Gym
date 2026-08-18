@@ -87,7 +87,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#06070d] text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-950 bg-sleek-dark">
+    <div className="min-h-screen bg-[#fafafa] text-gray-900 flex flex-col font-sans selection:bg-red-500 selection:text-white">
       {/* Top Navbar */}
       <Navbar
         routineCount={routine.length}

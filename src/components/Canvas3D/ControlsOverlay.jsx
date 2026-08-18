@@ -19,11 +19,11 @@ export default function ControlsOverlay({
         {/* Live HUD Scanner Badge */}
         <div className="pointer-events-auto flex items-center gap-2 px-3 py-1 rounded-full bg-[#080912]/80 backdrop-blur-md border border-slate-700/80 text-[11px] font-mono shadow-md">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-400"></span>
           </span>
           <span className="text-slate-300 font-semibold">
-            3D ANATOMY <span className="text-cyan-400 font-bold">SCANNER</span>
+            3D ANATOMY <span className="text-red-400 font-bold">SCANNER</span>
           </span>
         </div>
 
@@ -35,7 +35,7 @@ export default function ControlsOverlay({
               onClick={() => onSetCameraView(view)}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all uppercase ${
                 activeView === view
-                  ? 'bg-cyan-500 text-slate-950 shadow-[0_0_10px_rgba(0,242,254,0.4)]'
+                  ? 'bg-red-500 text-slate-950 shadow-[0_0_10px_rgba(0,242,254,0.4)]'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
@@ -49,7 +49,7 @@ export default function ControlsOverlay({
       <div className="flex items-center justify-between w-full gap-2">
         {/* Interaction Hint */}
         <div className="hidden sm:flex items-center gap-2 text-[11px] font-mono text-slate-400 bg-[#080912]/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 shadow-md">
-          <Compass className="w-3.5 h-3.5 text-cyan-400 animate-spin-slow" />
+          <Compass className="w-3.5 h-3.5 text-red-400 animate-spin-slow" />
           <span>DRAG 360° TO ROTATE • SCROLL TO ZOOM • CLICK TO TARGET</span>
         </div>
 
@@ -61,7 +61,7 @@ export default function ControlsOverlay({
             title="Toggle Wireframe / X-Ray Mode"
             className={`p-2 rounded-xl backdrop-blur-md border transition-all ${
               isWireframe
-                ? 'bg-cyan-500/30 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(0,242,254,0.4)]'
+                ? 'bg-red-500/30 border-red-400 text-red-300 shadow-[0_0_12px_rgba(0,242,254,0.4)]'
                 : 'bg-[#080912]/80 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
             }`}
           >
@@ -75,7 +75,7 @@ export default function ControlsOverlay({
               title="Toggle 3D Muscle Pins"
               className={`p-2 rounded-xl backdrop-blur-md border transition-all ${
                 showPins
-                  ? 'bg-cyan-500/30 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(0,242,254,0.4)]'
+                  ? 'bg-red-500/30 border-red-400 text-red-300 shadow-[0_0_12px_rgba(0,242,254,0.4)]'
                   : 'bg-[#080912]/80 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
@@ -89,11 +89,11 @@ export default function ControlsOverlay({
             title={autoRotate ? 'Pause Auto-Rotation' : 'Enable Auto-Rotation'}
             className={`p-2 rounded-xl backdrop-blur-md border transition-all ${
               autoRotate
-                ? 'bg-cyan-500/30 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(0,242,254,0.4)]'
+                ? 'bg-red-500/30 border-red-400 text-red-300 shadow-[0_0_12px_rgba(0,242,254,0.4)]'
                 : 'bg-[#080912]/80 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
             }`}
           >
-            <RotateCw className={`w-4 h-4 ${autoRotate ? 'animate-spin-slow text-cyan-400' : ''}`} />
+            <RotateCw className={`w-4 h-4 ${autoRotate ? 'animate-spin-slow text-red-400' : ''}`} />
           </button>
 
           {/* Reset Camera */}

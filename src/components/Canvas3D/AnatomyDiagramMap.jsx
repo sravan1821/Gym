@@ -234,7 +234,7 @@ export default function AnatomyDiagramMap({
       onPointerUp={handlePointerUp}
     >
       {/* Background ambient lighting (Cyan & Ice Blue, NO PINK) */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* ========================================================
           TOP 360° ROTATION & ZOOM CONTROL BAR (LIGHT & CLEAN)
@@ -307,7 +307,7 @@ export default function AnatomyDiagramMap({
               showLeaderLines ? 'bg-slate-900 text-white border-slate-800 font-bold' : 'bg-slate-100 text-slate-500 border-slate-200'
             }`}
           >
-            <Compass className="w-3 h-3 text-cyan-400" />
+            <Compass className="w-3 h-3 text-emerald-400" />
             <span className="hidden sm:inline">CALLOUTS</span>
           </button>
 

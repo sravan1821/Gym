@@ -19,12 +19,12 @@ import {
   ShieldAlert,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { EXERCISE_VIDEO_MAP } from './RealWorkoutVideoPlayer';
+import { resolveExerciseVideo } from './RealWorkoutVideoPlayer';
 
 /**
  * High-definition Exercise Detail & Form Trainer Modal
- * Inspired by MuscleWiki exercise pages with:
- * - Animated biomechanics visualizer
+ * White & Red professional theme with:
+ * - Real 4K/HD Video Stream
  * - Step-by-step cues (Setup, Execution, Focus, Common Mistakes)
  * - Primary/Secondary muscle activation bars
  * - Web Audio cadence metronome & interactive set timer
@@ -80,7 +80,7 @@ export default function ExerciseDetailModal({
       osc.start();
       osc.stop(ctx.currentTime + duration);
     } catch (e) {
-      console.warn('Audio Context error:', e);
+      // Audio context policy fallback
     }
   };
 
@@ -137,6 +137,8 @@ export default function ExerciseDetailModal({
 
   if (!exercise) return null;
 
+  const videoMeta = resolveExerciseVideo(exercise.name);
+
   const handleAdd = () => {
     onAddToRoutine({
       ...exercise,
@@ -146,7 +148,7 @@ export default function ExerciseDetailModal({
       particleCount: 40,
       spread: 70,
       origin: { y: 0.7 },
-      colors: ['#00f2fe', '#ff2a5f', '#10b981', '#f59e0b'],
+      colors: ['#dc2626', '#ef4444', '#f87171', '#b91c1c'],
     });
   };
 
@@ -158,32 +160,39 @@ export default function ExerciseDetailModal({
   };
 
   const activation = exercise.activation || {
-    primary: 90,
+    primary: 92,
     secondary: [
-      { name: 'Front Deltoids', percent: 50 },
-      { name: 'Triceps', percent: 40 },
+      { name: 'Core Stabilizers', percent: 45 },
+      { name: 'Synergist Load', percent: 60 },
     ],
   };
 
+  const formatTimer = (secs) => {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-4xl max-h-[92vh] bg-[#0c0e17] border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col my-auto text-slate-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/60 backdrop-blur-md animate-fadeIn">
+      {/* Modal Dialog */}
+      <div className="relative w-full max-w-4xl max-h-[92vh] bg-white border border-gray-200 rounded-3xl shadow-2xl overflow-hidden flex flex-col my-auto text-gray-800">
         {/* Top Header */}
-        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-slate-800 bg-[#080910]">
+        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-gray-100 bg-gray-50/50">
           <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <span className="p-2 rounded-xl bg-red-50 text-red-600 border border-red-100">
               <Dumbbell className="w-5 h-5" />
             </span>
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-slate-800 text-cyan-400 border border-slate-700 uppercase">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-red-50 text-red-600 uppercase border border-red-100">
                   {exercise.equipment || 'Standard'}
                 </span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gray-100 text-gray-700 uppercase">
                   {exercise.level || 'Intermediate'}
                 </span>
               </div>
-              <h2 className="text-lg sm:text-2xl font-bold tracking-tight text-white mt-0.5">
+              <h2 className="text-lg sm:text-2xl font-bold tracking-tight text-gray-900 mt-0.5">
                 {exercise.name}
               </h2>
             </div>
@@ -192,14 +201,14 @@ export default function ExerciseDetailModal({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSoundEnabled((prev) => !prev)}
-              className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors"
+              className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
               title={soundEnabled ? 'Mute audio cues' : 'Enable audio cues'}
             >
-              {soundEnabled ? <Volume2 className="w-4 h-4 text-cyan-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+              {soundEnabled ? <Volume2 className="w-4 h-4 text-red-600" /> : <VolumeX className="w-4 h-4 text-gray-400" />}
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+              className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -212,9 +221,9 @@ export default function ExerciseDetailModal({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             {/* Left: Real HD Video Demonstration */}
             <div className="lg:col-span-7">
-              <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden bg-black border border-slate-700/80 shadow-2xl">
+              <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden bg-black border border-gray-800 shadow-lg">
                 <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${EXERCISE_VIDEO_MAP[exercise.name]?.youtubeId || '0G2_kW746co'}?autoplay=1&mute=1&loop=1&playlist=${EXERCISE_VIDEO_MAP[exercise.name]?.youtubeId || '0G2_kW746co'}&controls=1&modestbranding=1&rel=0&showinfo=0`}
+                  src={`https://www.youtube-nocookie.com/embed/${videoMeta.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${videoMeta.youtubeId}&controls=1&modestbranding=1&rel=0&showinfo=0`}
                   title={`${exercise.name} Real HD Demonstration`}
                   className="w-full h-full border-0 absolute inset-0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -226,50 +235,50 @@ export default function ExerciseDetailModal({
             {/* Right: Key Stats & Activation Bars */}
             <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
               <div className="grid grid-cols-3 gap-2">
-                <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-center">
-                  <span className="text-[10px] font-mono text-slate-400 block uppercase font-bold">SETS</span>
-                  <span className="text-base sm:text-lg font-bold text-white">{exercise.sets || '3 - 4'}</span>
+                <div className="p-3 rounded-2xl bg-gray-50 border border-gray-100 text-center">
+                  <span className="text-[10px] font-mono text-gray-400 block uppercase font-bold">SETS</span>
+                  <span className="text-base sm:text-lg font-bold text-gray-900">{exercise.sets || '3 - 4'}</span>
                 </div>
-                <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-center">
-                  <span className="text-[10px] font-mono text-slate-400 block uppercase font-bold">REPS</span>
-                  <span className="text-base sm:text-lg font-bold text-cyan-400">{exercise.reps || '8 - 12'}</span>
+                <div className="p-3 rounded-2xl bg-gray-50 border border-gray-100 text-center">
+                  <span className="text-[10px] font-mono text-gray-400 block uppercase font-bold">REPS</span>
+                  <span className="text-base sm:text-lg font-bold text-red-600">{exercise.reps || '8 - 12'}</span>
                 </div>
-                <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-center">
-                  <span className="text-[10px] font-mono text-slate-400 block uppercase font-bold">REST</span>
-                  <span className="text-base sm:text-lg font-bold text-amber-400">{exercise.rest || '90s'}</span>
+                <div className="p-3 rounded-2xl bg-gray-50 border border-gray-100 text-center">
+                  <span className="text-[10px] font-mono text-gray-400 block uppercase font-bold">REST</span>
+                  <span className="text-base sm:text-lg font-bold text-gray-900">{exercise.rest || '90s'}</span>
                 </div>
               </div>
 
               {/* Muscle Activation Progress Bars */}
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+              <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase font-bold text-slate-400 flex items-center gap-1.5">
-                    <Target className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="text-xs font-mono uppercase font-bold text-gray-600 flex items-center gap-1.5">
+                    <Target className="w-3.5 h-3.5 text-red-600" />
                     <span>PRIMARY ACTIVATION</span>
                   </span>
-                  <span className="text-xs font-mono font-bold text-cyan-400">{activation.primary}%</span>
+                  <span className="text-xs font-mono font-bold text-red-600">{activation.primary}%</span>
                 </div>
-                <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full transition-all duration-700"
+                    className="bg-gradient-to-r from-red-600 to-red-500 h-full rounded-full transition-all duration-700"
                     style={{ width: `${activation.primary}%` }}
                   />
                 </div>
 
                 {activation.secondary?.length > 0 && (
-                  <div className="pt-2 border-t border-slate-800 space-y-2">
-                    <span className="text-[11px] font-mono uppercase font-bold text-slate-500 block">
+                  <div className="pt-2 border-t border-gray-200 space-y-2">
+                    <span className="text-[11px] font-mono uppercase font-bold text-gray-400 block">
                       SECONDARY SYNERGISTS
                     </span>
                     {activation.secondary.map((sec, idx) => (
                       <div key={idx} className="space-y-1">
                         <div className="flex items-center justify-between text-[11px] font-mono">
-                          <span className="text-slate-300">{sec.name}</span>
-                          <span className="text-slate-400">{sec.percent}%</span>
+                          <span className="text-gray-700">{sec.name}</span>
+                          <span className="text-gray-500">{sec.percent}%</span>
                         </div>
-                        <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
                           <div
-                            className="bg-slate-600 h-full rounded-full"
+                            className="bg-gray-400 h-full rounded-full"
                             style={{ width: `${sec.percent}%` }}
                           />
                         </div>
@@ -282,13 +291,13 @@ export default function ExerciseDetailModal({
           </div>
 
           {/* Interactive Mode Switcher Tabs */}
-          <div className="flex items-center gap-2 p-1 bg-slate-900 rounded-2xl border border-slate-800 text-xs font-mono">
+          <div className="flex items-center gap-2 p-1 bg-gray-100 rounded-2xl border border-gray-200 text-xs font-mono">
             <button
               onClick={() => setActiveTab('guide')}
               className={`flex-1 py-2.5 px-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
                 activeTab === 'guide'
-                  ? 'bg-cyan-500 text-slate-950 shadow-lg'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-red-600 text-white shadow-md'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               <Sparkles className="w-4 h-4" />
@@ -298,184 +307,138 @@ export default function ExerciseDetailModal({
               onClick={() => setActiveTab('timer')}
               className={`flex-1 py-2.5 px-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
                 activeTab === 'timer'
-                  ? 'bg-cyan-500 text-slate-950 shadow-lg'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-red-600 text-white shadow-md'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               <Timer className="w-4 h-4" />
-              <span>CADENCE COACH & REST TIMER</span>
+              <span>REST TIMER & CADENCE METRONOME</span>
             </button>
           </div>
 
-          {/* Tab 1: Step-by-Step Form Execution */}
+          {/* TAB 1: FORM CUES & COMMON MISTAKES */}
           {activeTab === 'guide' && (
-            <div className="space-y-4 animate-fadeIn">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* 1. Setup */}
-                <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold uppercase">
-                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold">
-                      1
-                    </span>
-                    <span>INITIAL SETUP</span>
-                  </div>
-                  <p className="text-xs text-slate-300 leading-relaxed pl-7">{cues.setup}</p>
-                </div>
-
-                {/* 2. Execution */}
-                <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold uppercase">
-                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold">
-                      2
-                    </span>
-                    <span>MOVEMENT EXECUTION</span>
-                  </div>
-                  <p className="text-xs text-slate-300 leading-relaxed pl-7">{cues.execution}</p>
-                </div>
-
-                {/* 3. Mind-Muscle Focus */}
-                <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold uppercase">
-                    <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold">
-                      3
-                    </span>
-                    <span>MIND-MUSCLE CUE</span>
-                  </div>
-                  <p className="text-xs text-slate-300 leading-relaxed pl-7">{cues.focus}</p>
-                </div>
-
-                {/* 4. Why It Works */}
-                <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-                  <div className="flex items-center gap-2 text-amber-400 font-mono text-xs font-bold uppercase">
-                    <span className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 font-bold">
-                      4
-                    </span>
-                    <span>BIOMECHANICAL BENEFIT</span>
-                  </div>
-                  <p className="text-xs text-slate-300 leading-relaxed pl-7">{exercise.whyItWorks || cues.focus}</p>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <span className="text-xs font-mono uppercase font-bold text-red-600 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-red-600" />
+                  1. SETUP & STANCE
+                </span>
+                <p className="text-xs text-gray-700 leading-relaxed">{cues.setup}</p>
               </div>
 
-              {/* Common Mistakes to Avoid */}
-              {cues.commonMistakes?.length > 0 && (
-                <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 space-y-2">
-                  <div className="flex items-center gap-2 text-red-400 font-mono text-xs font-bold uppercase">
-                    <ShieldAlert className="w-4 h-4" />
-                    <span>COMMON MISTAKES TO AVOID</span>
-                  </div>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-red-200">
-                    {cues.commonMistakes.map((mistake, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-red-400 font-bold">✕</span>
-                        <span>{mistake}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <span className="text-xs font-mono uppercase font-bold text-red-600 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-red-600" />
+                  2. EXECUTION & DESCENT
+                </span>
+                <p className="text-xs text-gray-700 leading-relaxed">{cues.execution}</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <span className="text-xs font-mono uppercase font-bold text-red-600 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-red-600" />
+                  3. MIND-MUSCLE FOCUS
+                </span>
+                <p className="text-xs text-gray-700 leading-relaxed">{cues.focus}</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-red-50/50 border border-red-100 space-y-2">
+                <span className="text-xs font-mono uppercase font-bold text-red-600 flex items-center gap-1.5">
+                  <ShieldAlert className="w-3.5 h-3.5 text-red-600" />
+                  COMMON MISTAKES TO AVOID
+                </span>
+                <ul className="text-xs text-gray-700 space-y-1 list-disc list-inside">
+                  {cues.commonMistakes?.map((m, i) => (
+                    <li key={i}>{m}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           )}
 
-          {/* Tab 2: Interactive Cadence Coach & Set Timer */}
+          {/* TAB 2: INTERACTIVE REST TIMER & AUDIO METRONOME */}
           {activeTab === 'timer' && (
-            <div className="space-y-5 animate-fadeIn">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Cadence Coach Metronome */}
-                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between text-center space-y-4">
-                  <div>
-                    <span className="text-xs font-mono uppercase text-slate-400 font-bold block mb-1">
-                      REAL-TIME CADENCE COACH
-                    </span>
-                    <p className="text-xs text-slate-500">
-                      Guides 3s eccentric lowering, 1s pause, and explosive concentric power.
-                    </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Rest Interval Timer */}
+              <div className="p-6 rounded-3xl bg-gray-50 border border-gray-200 text-center flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-mono uppercase font-bold text-gray-500 block mb-1">
+                    BETWEEN-SET REST INTERVAL
+                  </span>
+                  <div className="text-5xl font-black font-mono text-gray-900 tracking-tight my-4">
+                    {formatTimer(restSeconds)}
                   </div>
-
-                  <div className="py-6 px-4 rounded-2xl bg-[#080a10] border border-slate-800">
-                    <span className="text-2xl sm:text-3xl font-black font-mono tracking-wider text-cyan-400">
-                      {cadencePhase}
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => setCoachRunning((prev) => !prev)}
-                    className={`w-full py-3 rounded-xl font-bold font-mono text-sm transition-all flex items-center justify-center gap-2 ${
-                      coachRunning
-                        ? 'bg-red-500 text-white hover:bg-red-600'
-                        : 'bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 hover:brightness-110 shadow-lg'
-                    }`}
-                  >
-                    {coachRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                    <span>{coachRunning ? 'STOP CADENCE COACH' : 'START CADENCE COACH'}</span>
-                  </button>
                 </div>
 
-                {/* Rest Timer */}
-                <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between text-center space-y-4">
-                  <div>
-                    <span className="text-xs font-mono uppercase text-slate-400 font-bold block mb-1">
-                      SET REST TIMER
-                    </span>
-                    <p className="text-xs text-slate-500">
-                      Countdown recovery timer between working sets.
-                    </p>
-                  </div>
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => setTimerRunning((prev) => !prev)}
+                    className="px-6 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+                  >
+                    {timerRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    <span>{timerRunning ? 'PAUSE' : 'START REST'}</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setTimerRunning(false);
+                      setRestSeconds(90);
+                    }}
+                    className="p-2.5 rounded-xl bg-white border border-gray-200 text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
 
-                  <div className="py-6 px-4 rounded-2xl bg-[#080a10] border border-slate-800">
-                    <span className="text-4xl sm:text-5xl font-black font-mono tracking-wider text-amber-400">
-                      {Math.floor(restSeconds / 60)}:{(restSeconds % 60).toString().padStart(2, '0')}
-                    </span>
+              {/* Cadence Metronome */}
+              <div className="p-6 rounded-3xl bg-gray-50 border border-gray-200 text-center flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-mono uppercase font-bold text-red-600 block mb-1">
+                    HYPERTROPHY CADENCE METRONOME (3-0-1-0)
+                  </span>
+                  <div className="text-2xl sm:text-3xl font-black font-display text-gray-900 my-4 uppercase tracking-tight">
+                    {cadencePhase}
                   </div>
+                </div>
 
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setTimerRunning((prev) => !prev)}
-                      className={`flex-1 py-3 rounded-xl font-bold font-mono text-sm transition-all flex items-center justify-center gap-2 ${
-                        timerRunning
-                          ? 'bg-amber-500 text-slate-950 hover:bg-amber-600'
-                          : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
-                      }`}
-                    >
-                      {timerRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                      <span>{timerRunning ? 'PAUSE' : 'START REST'}</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setTimerRunning(false);
-                        const match = exercise.rest?.match(/\d+/);
-                        setRestSeconds(match ? parseInt(match[0], 10) : 90);
-                      }}
-                      className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors"
-                      title="Reset Timer"
-                    >
-                      <RotateCcw className="w-4 h-4" />
-                    </button>
-                  </div>
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => setCoachRunning((prev) => !prev)}
+                    className="px-6 py-2.5 rounded-xl bg-gray-900 hover:bg-black text-white font-mono text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+                  >
+                    {coachRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    <span>{coachRunning ? 'STOP METRONOME' : 'START CADENCE'}</span>
+                  </button>
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        {/* Modal Footer */}
-        <div className="px-5 sm:px-7 py-4 border-t border-slate-800 bg-[#080910] flex items-center justify-between gap-3">
-          <div className="text-xs font-mono text-slate-400">
-            Target: <strong className="text-cyan-400">{exercise.target || muscleName}</strong>
-          </div>
+        {/* Modal Footer CTA */}
+        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-t border-gray-100 bg-gray-50/50">
+          <span className="text-xs font-mono text-gray-500 hidden sm:inline">
+            Target Muscle Group: <strong className="text-gray-900">{muscleName}</strong>
+          </span>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
             <button
               onClick={onClose}
-              className="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs font-bold transition-colors"
+              className="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-mono font-bold transition-colors"
             >
               CLOSE
             </button>
             <button
               onClick={handleAdd}
-              className="py-2.5 px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 font-mono text-xs font-bold hover:brightness-110 shadow-lg transition-all flex items-center gap-2"
+              className={`px-5 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
+                isAdded
+                  ? 'bg-red-50 border border-red-200 text-red-600'
+                  : 'bg-gradient-to-r from-red-600 to-red-500 text-white shadow-md shadow-red-600/20 hover:brightness-110'
+              }`}
             >
               {isAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              <span>{isAdded ? 'ADDED TO ROUTINE' : 'ADD TO ROUTINE'}</span>
+              <span>{isAdded ? 'ADDED TO ROUTINE' : 'ADD TO WORKOUT ROUTINE'}</span>
             </button>
           </div>
         </div>

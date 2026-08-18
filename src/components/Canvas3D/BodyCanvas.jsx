@@ -87,13 +87,13 @@ export default function BodyCanvas({
   };
 
   // Pin data list from MUSCLE_GROUPS
-  const pins = Object.values(MUSCLE_GROUPS).filter((m) => m.pin3D);
+  const pins = Object.values(MUSCLE_GROUPS).filter((m, i, arr) => m.pin3D && arr.findIndex(x => x.id === m.id) === i);
 
   return (
-    <div className="relative w-full h-[720px] sm:h-[800px] lg:h-[860px] xl:h-[900px] rounded-3xl overflow-hidden glass-panel-glow border border-slate-700/60 shadow-2xl group select-none bg-[#050811] transition-all duration-500">
+    <div className="relative w-full h-[720px] sm:h-[800px] lg:h-[860px] xl:h-[900px] rounded-3xl overflow-hidden glass-panel-glow  shadow-2xl group select-none bg-[#050811] transition-all duration-500">
       {/* Studio Lighting Background Glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a1224] via-[#060b16] to-[#04060d] -z-10" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-cyan-500/12 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-emerald-500/8 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       {/* Ground Floor Vignette */}
       <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-[#04060d] via-[#060b16]/60 to-transparent pointer-events-none z-10" />
@@ -138,7 +138,7 @@ export default function BodyCanvas({
         <directionalLight position={[-3.5, 3, 2.5]} intensity={1.5} color="#00e5ff" />
 
         {/* Fiery Crimson / Cyan Rim Backlight */}
-        <directionalLight position={[0, 4, -4.5]} intensity={4.2} color="#00f2fe" />
+        <directionalLight position={[0, 4, -4.5]} intensity={4.2} color="#10b981" />
         <pointLight position={[0, 1.4, -2.5]} intensity={3.5} color="#00e5ff" distance={6} />
         <pointLight position={[0, 1.1, 2.2]} intensity={2.0} color="#ff2a5f" distance={4.5} />
 

@@ -43,7 +43,7 @@ export default function WorkoutRoutineQueue({
       confetti({
         particleCount: 40,
         spread: 65,
-        colors: ['#00f2fe', '#ff2a5f', '#10b981', '#f59e0b'],
+        colors: ['#dc2626', '#ef4444', '#f87171', '#b91c1c'],
       });
     }
     return () => clearInterval(interval);
@@ -87,37 +87,34 @@ export default function WorkoutRoutineQueue({
 
   return (
     <section id="routine" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-700/80 shadow-2xl relative overflow-hidden bg-[#0c0e18]/95 text-slate-200">
-        {/* Ambient Flare */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-[0_4px_24px_rgba(0,0,0,0.05)] relative overflow-hidden text-gray-800">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-2 font-bold shadow-sm">
-              <Dumbbell className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-100 text-red-600 text-xs font-mono mb-2 font-bold shadow-sm">
+              <Dumbbell className="w-3.5 h-3.5 text-red-600" />
               <span>CUSTOM WORKOUT BUILDER & LOG</span>
-              <span className="text-white font-bold ml-1">({currentLevelData.name.toUpperCase()} LEVEL)</span>
+              <span className="text-gray-900 font-bold ml-1">({currentLevelData.name.toUpperCase()} LEVEL)</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
               Active Routine & Set Tracker
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 font-mono mt-1">
-              {routine.length} exercises queued • Progress: <strong className="text-cyan-400">{progressPercent}% complete</strong> ({totalCompleted}/{totalSets} sets)
+            <p className="text-xs sm:text-sm text-gray-500 font-mono mt-1">
+              {routine.length} exercises queued • Progress: <strong className="text-red-600">{progressPercent}% complete</strong> ({totalCompleted}/{totalSets} sets)
             </p>
           </div>
 
           {/* Quick Rest Timer & Controls */}
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
-              <Clock className="w-4 h-4 text-cyan-400" />
-              <span className="font-mono text-sm font-bold text-white">
+            <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gray-50 border border-gray-200 shadow-sm">
+              <Clock className="w-4 h-4 text-red-600" />
+              <span className="font-mono text-sm font-bold text-gray-900">
                 {timerSeconds > 0 ? formatTimer(timerSeconds) : 'REST TIMER'}
               </span>
               {timerActive ? (
                 <button
                   onClick={() => setTimerActive(false)}
-                  className="p-1 rounded-lg bg-amber-500/20 text-amber-400 hover:bg-amber-500/30"
+                  className="p-1 rounded-lg bg-amber-100 text-amber-600 hover:bg-amber-200"
                   title="Pause Timer"
                 >
                   <Pause className="w-3.5 h-3.5" />
@@ -125,7 +122,7 @@ export default function WorkoutRoutineQueue({
               ) : (
                 <button
                   onClick={() => startRestTimer(75)}
-                  className="p-1 rounded-lg bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30"
+                  className="p-1 rounded-lg bg-red-100 text-red-600 hover:bg-red-200"
                   title="Start 75s Rest"
                 >
                   <Play className="w-3.5 h-3.5" />
@@ -137,14 +134,14 @@ export default function WorkoutRoutineQueue({
               <>
                 <button
                   onClick={handleCopyRoutine}
-                  className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-colors"
+                  className="p-2.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                   title="Copy Routine to Clipboard"
                 >
-                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  {copied ? <Check className="w-4 h-4 text-red-600" /> : <Copy className="w-4 h-4" />}
                 </button>
                 <button
                   onClick={onClearRoutine}
-                  className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-red-400 transition-colors"
+                  className="p-2.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-500 hover:text-red-600 hover:bg-red-50 transition-colors"
                   title="Clear Routine"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -156,25 +153,25 @@ export default function WorkoutRoutineQueue({
 
         {/* Preset Split Fast-Loaders */}
         <div className="mt-5 flex items-center gap-2 flex-wrap text-xs font-mono">
-          <span className="text-slate-400 font-bold uppercase flex items-center gap-1.5 mr-1">
-            <Layers className="w-3.5 h-3.5 text-cyan-400" />
+          <span className="text-gray-500 font-bold uppercase flex items-center gap-1.5 mr-1">
+            <Layers className="w-3.5 h-3.5 text-red-600" />
             LOAD PRESETS:
           </span>
           <button
             onClick={() => onLoadPresetSplit('push')}
-            className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 text-slate-300 hover:text-white font-bold transition-all"
+            className="px-3.5 py-1.5 rounded-xl bg-gray-50 hover:bg-red-50 hover:border-red-200 border border-gray-200 text-gray-700 hover:text-red-600 font-bold transition-all"
           >
             🔥 Push Day (Chest & Shoulders)
           </button>
           <button
             onClick={() => onLoadPresetSplit('pull')}
-            className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 text-slate-300 hover:text-white font-bold transition-all"
+            className="px-3.5 py-1.5 rounded-xl bg-gray-50 hover:bg-red-50 hover:border-red-200 border border-gray-200 text-gray-700 hover:text-red-600 font-bold transition-all"
           >
             ⚡ Pull Day (Back & Biceps)
           </button>
           <button
             onClick={() => onLoadPresetSplit('legs')}
-            className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 text-slate-300 hover:text-white font-bold transition-all"
+            className="px-3.5 py-1.5 rounded-xl bg-gray-50 hover:bg-red-50 hover:border-red-200 border border-gray-200 text-gray-700 hover:text-red-600 font-bold transition-all"
           >
             🦵 Leg Day (Quads, Glutes & Calves)
           </button>
@@ -183,10 +180,10 @@ export default function WorkoutRoutineQueue({
         {/* Routine Exercises Grid */}
         <div className="mt-6 space-y-3">
           {routine.length === 0 ? (
-            <div className="py-12 px-4 text-center rounded-2xl bg-slate-900/50 border border-slate-800 text-slate-400 space-y-2">
-              <Dumbbell className="w-10 h-10 mx-auto text-slate-600 opacity-60" />
-              <p className="text-sm font-mono font-bold text-white">Your workout routine is empty</p>
-              <p className="text-xs text-slate-500 max-w-md mx-auto">
+            <div className="py-12 px-4 text-center rounded-2xl bg-gray-50 border border-gray-200 text-gray-500 space-y-2">
+              <Dumbbell className="w-10 h-10 mx-auto text-gray-400 opacity-60" />
+              <p className="text-sm font-mono font-bold text-gray-900">Your workout routine is empty</p>
+              <p className="text-xs text-gray-400 max-w-md mx-auto">
                 Select muscles on the 3D anatomy model above and click "Add to Routine", or choose a preset split above.
               </p>
             </div>
@@ -194,23 +191,23 @@ export default function WorkoutRoutineQueue({
             routine.map((item, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-slate-700 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="p-4 rounded-2xl bg-gray-50/70 border border-gray-200 hover:border-red-200 hover:bg-white hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
               >
                 {/* Left: Info */}
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-lg bg-slate-800 text-cyan-400 text-xs font-mono font-bold flex items-center justify-center">
+                    <span className="w-6 h-6 rounded-lg bg-red-100 text-red-600 text-xs font-mono font-bold flex items-center justify-center">
                       {idx + 1}
                     </span>
-                    <span className="text-xs font-mono font-bold text-slate-400 uppercase">
+                    <span className="text-xs font-mono font-bold text-gray-600 uppercase">
                       {item.muscleName || item.target || 'Target Region'}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300 border border-slate-700 uppercase">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-gray-200 text-gray-700 uppercase font-semibold">
                       {item.equipment || 'Standard'}
                     </span>
                   </div>
-                  <h4 className="text-base font-bold text-white pl-8">{item.name}</h4>
-                  <p className="text-xs text-slate-400 pl-8 font-mono">
+                  <h4 className="text-base font-bold text-gray-900 pl-8">{item.name}</h4>
+                  <p className="text-xs text-gray-500 pl-8 font-mono">
                     Target: {item.sets || '3-4 Sets'} • {item.reps || '8-12 Reps'} • Rest: {item.rest || '90s'}
                   </p>
                 </div>
@@ -226,8 +223,8 @@ export default function WorkoutRoutineQueue({
                           onClick={() => toggleSet(item.name, sIdx)}
                           className={`w-9 h-9 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center ${
                             isChecked
-                              ? 'bg-emerald-500 text-slate-950 shadow-md scale-105'
-                              : 'bg-slate-800/90 text-slate-400 hover:text-white border border-slate-700 hover:border-slate-600'
+                              ? 'bg-red-600 text-white shadow-md shadow-red-600/20 scale-105'
+                              : 'bg-white border border-gray-200 text-gray-600 hover:text-red-600 hover:border-red-300'
                           }`}
                           title={`Toggle Set ${sIdx + 1}`}
                         >
@@ -239,7 +236,7 @@ export default function WorkoutRoutineQueue({
 
                   <button
                     onClick={() => onRemoveExercise(item.name)}
-                    className="p-2 rounded-xl bg-slate-800/60 hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors"
+                    className="p-2 rounded-xl bg-white border border-gray-200 hover:bg-red-50 hover:border-red-200 text-gray-400 hover:text-red-600 transition-colors"
                     title="Remove from routine"
                   >
                     <Trash2 className="w-4 h-4" />
