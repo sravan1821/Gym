@@ -30,6 +30,7 @@ export default function WorkoutRoutineQueue({
   const [copied, setCopied] = useState(false);
 
   const currentLevelData = EXPERIENCE_LEVELS[experienceLevel] || EXPERIENCE_LEVELS.intermediate;
+  const safeRoutine = (routine || []).filter(Boolean);
 
   // Timer Tick
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function WorkoutRoutineQueue({
   };
 
   const toggleSet = (exerciseName, setIndex) => {
+    if (!exerciseName) return;
     const key = `${exerciseName}-${setIndex}`;
     setCompletedSets((prev) => ({
       ...prev,
@@ -69,10 +71,10 @@ export default function WorkoutRoutineQueue({
   };
 
   const handleCopyRoutine = () => {
-    const text = routine
+    const text = safeRoutine
       .map(
         (ex, i) =>
-          `${i + 1}. ${ex.name} (${ex.muscleName || 'Target'}) - ${ex.sets || '3 Sets'} x ${ex.reps || '10 Reps'}`
+          `${i + 1}. ${ex?.name || 'Exercise'} (${ex?.muscleName || ex?.target || 'Target'}) - ${ex?.sets || '3 Sets'} x ${ex?.reps || '10 Reps'}`
       )
       .join('\n');
     navigator.clipboard.writeText(`MY WORKOUT ROUTINE:\n${text}`);
@@ -81,7 +83,7 @@ export default function WorkoutRoutineQueue({
   };
 
   const numSetsToDisplay = experienceLevel === 'beginner' ? 3 : experienceLevel === 'intermediate' ? 4 : 5;
-  const totalSets = routine.length * numSetsToDisplay;
+  const totalSets = safeRoutine.length * numSetsToDisplay;
   const totalCompleted = Object.values(completedSets).filter(Boolean).length;
   const progressPercent = totalSets > 0 ? Math.round((totalCompleted / totalSets) * 100) : 0;
 
@@ -179,7 +181,7 @@ export default function WorkoutRoutineQueue({
 
         {/* Routine Exercises Grid */}
         <div className="mt-6 space-y-3">
-          {routine.length === 0 ? (
+          {safeRoutine.length === 0 ? (
             <div className="py-12 px-4 text-center rounded-2xl bg-gray-50 border border-gray-200 text-gray-500 space-y-2">
               <Dumbbell className="w-10 h-10 mx-auto text-gray-400 opacity-60" />
               <p className="text-sm font-mono font-bold text-gray-900">Your workout routine is empty</p>
@@ -188,7 +190,7 @@ export default function WorkoutRoutineQueue({
               </p>
             </div>
           ) : (
-            routine.map((item, idx) => (
+            safeRoutine.map((item, idx) => (
               <div
                 key={idx}
                 className="p-4 rounded-2xl bg-gray-50/70 border border-gray-200 hover:border-red-200 hover:bg-white hover:shadow-md transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"

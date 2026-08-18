@@ -29,39 +29,51 @@ export default function App() {
     setRoutine([]);
   };
 
+  const getMuscleWorkouts = (muscleKey, level = experienceLevel) => {
+    const muscle = MUSCLE_GROUPS[muscleKey];
+    if (!muscle) return [];
+    const direct = muscle.levelWorkouts?.[level] || muscle.levelWorkouts?.intermediate || [];
+    const subWorkouts = muscle.subMuscles?.flatMap((s) => s.levelWorkouts?.[level] || s.levelWorkouts?.intermediate || []) || [];
+    return [...direct, ...subWorkouts].filter(Boolean);
+  };
+
   const handleChangeLevel = (newLevel) => {
     setExperienceLevel(newLevel);
-    if (MUSCLE_GROUPS.chest.levelWorkouts[newLevel]) {
-      setRoutine([
-        MUSCLE_GROUPS.chest.levelWorkouts[newLevel][0],
-        MUSCLE_GROUPS.shoulders.levelWorkouts[newLevel][0],
-        MUSCLE_GROUPS.biceps.levelWorkouts[newLevel][0],
-      ]);
-    }
+    const chest = getMuscleWorkouts('chest', newLevel);
+    const shoulders = getMuscleWorkouts('shoulders', newLevel);
+    const biceps = getMuscleWorkouts('biceps', newLevel);
+    setRoutine([chest[0], shoulders[0], biceps[0]].filter(Boolean));
   };
 
   const handleLoadPresetSplit = (type) => {
-    const workouts = (muscle) => MUSCLE_GROUPS[muscle]?.levelWorkouts[experienceLevel] || [];
-
     if (type === 'push') {
+      const chest = getMuscleWorkouts('chest');
+      const shoulders = getMuscleWorkouts('shoulders');
+      const triceps = getMuscleWorkouts('triceps');
       setRoutine([
-        workouts('chest')[0] || MUSCLE_GROUPS.chest.levelWorkouts.intermediate[0],
-        workouts('chest')[1] || MUSCLE_GROUPS.chest.levelWorkouts.intermediate[1],
-        workouts('shoulders')[0] || MUSCLE_GROUPS.shoulders.levelWorkouts.intermediate[0],
-        workouts('triceps')[0] || MUSCLE_GROUPS.triceps.levelWorkouts.intermediate[0],
-      ]);
+        chest[0] || MUSCLE_GROUPS.chest.levelWorkouts.intermediate[0],
+        chest[1] || chest[0],
+        shoulders[0] || MUSCLE_GROUPS.shoulders.levelWorkouts.intermediate[0],
+        triceps[0] || MUSCLE_GROUPS.triceps.levelWorkouts.intermediate[0],
+      ].filter(Boolean));
     } else if (type === 'pull') {
+      const back = getMuscleWorkouts('back');
+      const biceps = getMuscleWorkouts('biceps');
       setRoutine([
-        workouts('back')[0] || MUSCLE_GROUPS.back.levelWorkouts.intermediate[0],
-        workouts('back')[1] || MUSCLE_GROUPS.back.levelWorkouts.intermediate[1],
-        workouts('biceps')[0] || MUSCLE_GROUPS.biceps.levelWorkouts.intermediate[0],
-      ]);
+        back[0] || MUSCLE_GROUPS.back.levelWorkouts.intermediate[0],
+        back[1] || back[0],
+        biceps[0] || MUSCLE_GROUPS.biceps.levelWorkouts.intermediate[0],
+        biceps[1] || biceps[0],
+      ].filter(Boolean));
     } else if (type === 'legs') {
+      const quads = getMuscleWorkouts('quads');
+      const glutes = getMuscleWorkouts('glutes_hamstrings');
+      const calves = getMuscleWorkouts('calves');
       setRoutine([
-        workouts('quads')[0] || MUSCLE_GROUPS.quads.levelWorkouts.intermediate[0],
-        workouts('glutes_hamstrings')[0] || MUSCLE_GROUPS.glutes_hamstrings.levelWorkouts.intermediate[0],
-        workouts('calves')[0] || MUSCLE_GROUPS.calves.levelWorkouts.intermediate[0],
-      ]);
+        quads[0] || MUSCLE_GROUPS.quads.levelWorkouts.intermediate[0],
+        glutes[0] || MUSCLE_GROUPS.glutes_hamstrings.levelWorkouts.intermediate[0],
+        calves[0] || MUSCLE_GROUPS.calves.levelWorkouts.intermediate[0],
+      ].filter(Boolean));
     }
   };
 
