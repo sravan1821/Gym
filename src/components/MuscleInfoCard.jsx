@@ -108,7 +108,7 @@ export default function MuscleInfoCard({
   // Standby View when No Muscle is Selected Yet
   if (!selectedMuscleId || !muscle) {
     return (
-      <div className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-[0_4px_24px_rgba(0,0,0,0.06)] relative overflow-hidden transition-all duration-500 flex flex-col justify-between h-[720px] sm:h-[800px] lg:h-[860px] xl:h-[900px] text-gray-800">
+      <div className="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-[0_4px_24px_rgba(0,0,0,0.06)] relative overflow-hidden transition-all duration-500 flex flex-col justify-between h-[780px] sm:h-[860px] lg:h-[920px] xl:h-[960px] text-gray-800">
         {/* Top Header */}
         <div className="border-b border-gray-100 pb-3">
           <div className="flex items-center justify-between">
