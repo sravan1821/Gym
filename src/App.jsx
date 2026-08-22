@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import TrainerDietProcessor from './components/TrainerDietProcessor';
 import WorkoutRoutineQueue from './components/WorkoutRoutineQueue';
-import WorkoutPrograms from './components/WorkoutPrograms';
+import HealthGymChatbot from './components/HealthGymChatbot';
 import Footer from './components/Footer';
 import { MUSCLE_GROUPS, EXPERIENCE_LEVELS } from './data/muscleData';
 
@@ -77,20 +78,6 @@ export default function App() {
     }
   };
 
-  const handleSelectSplit = (splitId) => {
-    if (splitId.includes('fullbody') || splitId.includes('push') || splitId.includes('ppl')) {
-      handleLoadPresetSplit('push');
-    } else if (splitId.includes('upper') || splitId.includes('pull') || splitId.includes('arnold')) {
-      handleLoadPresetSplit('pull');
-    } else {
-      handleLoadPresetSplit('legs');
-    }
-    const heroEl = document.getElementById('hero-3d');
-    if (heroEl) {
-      heroEl.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   const handleScrollToRoutine = () => {
     const el = document.getElementById('routine');
     if (el) {
@@ -99,7 +86,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] text-gray-900 flex flex-col font-sans selection:bg-red-500 selection:text-white">
+    <div className="min-h-screen bg-[#fbf7ee] text-stone-900 flex flex-col font-sans selection:bg-red-600 selection:text-white">
       {/* Top Navbar */}
       <Navbar
         routineCount={routine.length}
@@ -116,6 +103,9 @@ export default function App() {
           onChangeExperienceLevel={handleChangeLevel}
         />
 
+        {/* Client Body Condition & Trainer Diet & Training Split Processing Engine */}
+        <TrainerDietProcessor />
+
         {/* Live Routine Tracker & Set Log */}
         <WorkoutRoutineQueue
           routine={routine}
@@ -124,13 +114,10 @@ export default function App() {
           onLoadPresetSplit={handleLoadPresetSplit}
           experienceLevel={experienceLevel}
         />
-
-        {/* Hypertrophy Splits & Scientific Training Plans */}
-        <WorkoutPrograms
-          onSelectSplit={handleSelectSplit}
-          experienceLevel={experienceLevel}
-        />
       </main>
+
+      {/* Floating Health & Gym AI Chatbot on Left Side */}
+      <HealthGymChatbot />
 
       {/* Footer */}
       <Footer />

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Flame, Menu, X, Dumbbell, Activity } from 'lucide-react';
+import { Flame, Menu, X, Dumbbell, Activity, Bot } from 'lucide-react';
 
 export default function Navbar({ routineCount = 0, onOpenRoutine }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-gray-100">
+    <nav className="fixed top-0 inset-x-0 z-50 bg-[#fbf7ee]/95 backdrop-blur-xl shadow-[0_1px_4px_rgba(0,0,0,0.04)] border-b border-[#e7e5e4]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
@@ -26,16 +26,16 @@ export default function Navbar({ routineCount = 0, onOpenRoutine }) {
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8 text-xs font-mono tracking-wider font-bold">
-            <a href="#hero-3d" className="text-red-600 hover:text-red-500 transition-colors flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+          <div className="hidden md:flex items-center gap-6 text-xs font-mono tracking-wider font-bold">
+            <a href="#hero-3d" className="text-red-600 hover:text-red-700 transition-colors flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
               3D ANATOMY SCANNER
             </a>
-            <a href="#programs" className="text-gray-500 hover:text-gray-900 transition-colors">
-              TRAINING SPLITS
+            <a href="#diet-processor" className="text-stone-800 hover:text-red-600 transition-colors flex items-center gap-1">
+              <span>DIET & WORKOUT SPLIT</span>
             </a>
-            <a href="#routine" className="text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1.5">
-              <span>WORKOUT ROUTINE</span>
+            <a href="#routine" className="text-stone-600 hover:text-stone-900 transition-colors flex items-center gap-1.5">
+              <span>ACTIVE ROUTINE LOG</span>
               {routineCount > 0 && (
                 <span className="px-1.5 py-0.5 rounded-full bg-red-600 text-white text-[10px] font-bold">
                   {routineCount}
@@ -46,6 +46,13 @@ export default function Navbar({ routineCount = 0, onOpenRoutine }) {
 
           {/* Right Action CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('open-health-chatbot'))}
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-gray-900 text-white hover:bg-gray-800 text-xs font-mono transition-all shadow-md font-bold"
+            >
+              <Bot className="w-3.5 h-3.5 text-red-500" />
+              <span>HEALTH AI CHAT</span>
+            </button>
             <button
               onClick={onOpenRoutine}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white hover:brightness-110 text-xs font-mono transition-all shadow-lg font-bold"
@@ -88,6 +95,13 @@ export default function Navbar({ routineCount = 0, onOpenRoutine }) {
             className="block px-3 py-2 rounded-lg text-red-600 bg-red-50"
           >
             ⚡ 3D ANATOMY SCANNER
+          </a>
+          <a
+            href="#diet-processor"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50"
+          >
+            🥗 TRAINER & DIET PROCESSOR
           </a>
           <a
             href="#programs"
